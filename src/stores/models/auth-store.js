@@ -1,5 +1,5 @@
 import { createModel } from '@rematch/core';
-import { getUser } from 'utils/api';
+import { signIn } from 'utils/api';
 
 const authStore = createModel()({
   state: {
@@ -20,9 +20,13 @@ const authStore = createModel()({
 
   effects: (dispatch) => ({
     async doSignUp(payload) {
-      const userInfo = await getUser(payload);
+      const userInfo = await signIn(payload);
 
-      dispatch.authStore.setUserInfo(userInfo);
+      dispatch.authStore.setUserInfo({
+        id: userInfo.id,
+        name: userInfo.name,
+        avatarURL: userInfo.avatarURL,
+      });
       dispatch.authStore.setIsUserAuthenticated(true);
     },
   }),

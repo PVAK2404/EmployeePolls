@@ -1,4 +1,4 @@
-import nonAuthorizedRoutes from './authorizedRoutes';
-import authorizedRoutes from './nonAuthorizedRoutes';
+import authorizedRoutes from './authorizedRoutes';
+import nonAuthorizedRoutes from './nonAuthorizedRoutes';
 
 export { authorizedRoutes, nonAuthorizedRoutes };

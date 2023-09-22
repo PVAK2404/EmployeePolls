@@ -1,11 +1,11 @@
-import userRouters from 'pages/user';
+import authRoutes from 'pages/auth';
 
-const authorizedRoutes = [
+export const nonAuthorizedRoutes = [
   {
-    path: '',
-    children: userRouters,
+    path: '/',
+    children: authRoutes,
     // errorElement: <ErrorPage />,
   },
 ];
 
-export default authorizedRoutes;
+export default nonAuthorizedRoutes;

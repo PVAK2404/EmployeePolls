@@ -10,8 +10,8 @@ function Layout() {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
-  const [questions, setQuestions] = useState(null);
-  const [newQuestions, setNewQuestions] = useState(null);
+  const [questions, setQuestions] = useState([]);
+  const [newQuestions, setNewQuestions] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -47,7 +47,7 @@ function Layout() {
 
   return (
     <>
-      {newQuestions && (
+      {newQuestions.length !== 0 && (
         <CardAntd
           title={
             <Typography className="text-center text-3xl">Unanswered</Typography>
@@ -64,7 +64,7 @@ function Layout() {
         </CardAntd>
       )}
 
-      {questions && (
+      {questions.length !== 0 && (
         <CardAntd
           className="mt-10"
           title={

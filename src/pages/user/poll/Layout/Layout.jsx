@@ -54,11 +54,7 @@ function Layout() {
           selectedQuestion.optionTwo.votes.includes(userInfo.id) ? (
             <Detail selectedQuestion={selectedQuestion} userInfo={userInfo} />
           ) : (
-            <Choose
-              selectedQuestion={selectedQuestion}
-              userInfo={userInfo}
-              setSelectedQuestion={setSelectedQuestion}
-            />
+            <Choose selectedQuestion={selectedQuestion} userInfo={userInfo} />
           )}
         </Row>
       </div>

@@ -1,11 +1,16 @@
 import { Button, Card, Col, Typography } from 'antd';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-function Choose({ selectedQuestion, userInfo, setSelectedQuestion }) {
+function Choose({ selectedQuestion, userInfo }) {
   const dispatch = useDispatch();
+  const navigator = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleOnClick = async (e) => {
     try {
+      setLoading(true);
       const authedUser = userInfo.id;
       const qid = selectedQuestion.id;
       const answer = e.target.value;
@@ -22,16 +27,12 @@ function Choose({ selectedQuestion, userInfo, setSelectedQuestion }) {
           answers: { ...userInfo.answers, [qid]: answer },
         });
 
-        setSelectedQuestion((prev) => ({
-          ...prev,
-          [answer]: {
-            ...prev[answer],
-            votes: prev[answer].votes.concat([authedUser]),
-          },
-        }));
+        navigator('/');
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(true);
     }
   };
 
@@ -48,6 +49,7 @@ function Choose({ selectedQuestion, userInfo, setSelectedQuestion }) {
             type="primary"
             onClick={handleOnClick}
             value="optionOne"
+            loading={loading}
           >
             Click
           </Button>
@@ -64,6 +66,7 @@ function Choose({ selectedQuestion, userInfo, setSelectedQuestion }) {
             type="primary"
             onClick={handleOnClick}
             value="optionTwo"
+            loading={loading}
           >
             Click
           </Button>

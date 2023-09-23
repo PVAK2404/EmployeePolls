@@ -3,7 +3,7 @@ import authRoutes from 'pages/auth';
 
 export const nonAuthorizedRoutes = [
   {
-    path: '/',
+    path: '',
     children: authRoutes,
     errorElement: <ErrorPage />,
   },

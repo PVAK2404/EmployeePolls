@@ -39,6 +39,7 @@ function Layout() {
           <Form layout="vertical" onFinish={handleFinish}>
             {error && (
               <Alert
+                data-testid="alert"
                 type="error"
                 message={error}
                 showIcon

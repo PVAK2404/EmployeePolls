@@ -15,7 +15,7 @@ async function signIn({ user, password }) {
     if (isUser) return users[user];
   }
 
-  throw new Error('Wrong username or password');
+  throw new Error('Wrong username or password!');
 }
 
 async function getQuestions(questionIds) {

@@ -33,10 +33,24 @@ async function doGetQuestionByUser(userId) {
   return { answers: users[userId].answers, questions: users[userId].questions };
 }
 
-async function getLeaderboardInfo() {
-  const users = await _getUsers();
+const countOccurrences = (arr, target) => {
+  return arr.reduce((count, element) => {
+    return count + (element.author === target ? 1 : 0);
+  }, 0);
+};
 
-  return Object.values(users).map((user) => ({ ...user, key: user.id }));
+async function getLeaderboardInfo() {
+  const [allUsers, allQuestions] = await Promise.all([
+    _getUsers(),
+    _getQuestions(),
+    _,
+  ]);
+
+  return Object.values(allUsers).map((user) => {
+    const created = countOccurrences(Object.values(allQuestions), user.id);
+
+    return { ...user, key: user.id, created };
+  });
 }
 
 async function addQuestion(question) {
@@ -52,6 +66,8 @@ async function getQuestion(id) {
     _getQuestions(),
     _getUsers(),
   ]);
+
+  if (!allQuestions[id]) throw new Error('404');
 
   return {
     ...allQuestions[id],

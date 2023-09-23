@@ -14,11 +14,12 @@ function Layout() {
   const handleFinish = async (payload) => {
     try {
       setLoading(true);
-      const question = await dispatch.appStore.doAddQuestion({
+      await dispatch.appStore.doAddQuestion({
         ...payload,
         author: userInfo.id,
       });
-      navigator(`/questions/${question.id}`);
+
+      navigator('/');
     } catch (err) {
       setError(err);
     } finally {

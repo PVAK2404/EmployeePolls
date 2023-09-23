@@ -35,25 +35,43 @@ const columns = [
     title: 'Created',
     dataIndex: 'created',
     key: 'created',
-    render: (_, { questions }) => (
-      <Typography.Text>{questions.length}</Typography.Text>
-    ),
+    render: (_, { created }) => <Typography.Text>{created}</Typography.Text>,
   },
 ];
 
 function Layout() {
   const dispatch = useDispatch();
   const [users, setUsers] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const result = await dispatch.appStore.doGetLeaderboardInfo();
+      try {
+        setLoading(true);
+        const result = await dispatch.appStore.doGetLeaderboardInfo();
 
-      setUsers(result);
+        setUsers(
+          result.sort((a, b) => {
+            return Object.values(a.answers).length <
+              Object.values(b.answers).length
+              ? 1
+              : Object.values(a.answers).length >
+                Object.values(b.answers).length
+              ? -1
+              : a.created < b.created
+              ? 1
+              : -1;
+          }),
+        );
+      } catch (err) {
+        console.err(err);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [dispatch.appStore]);
 
-  return <Table columns={columns} dataSource={users} />;
+  return <Table columns={columns} dataSource={users} loading={loading} />;
 }
 
 export default Layout;

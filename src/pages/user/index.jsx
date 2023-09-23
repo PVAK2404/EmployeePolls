@@ -1,3 +1,4 @@
+import ErrorPage from 'components';
 import Layout from './Layout';
 import homeRoutes from './home';
 import leaderboardRoutes from './leaderboard';
@@ -26,6 +27,10 @@ const routes = [
         children: newRoutes,
       },
     ],
+  },
+  {
+    path: '404',
+    element: <ErrorPage />,
   },
 ];
 

@@ -29,6 +29,10 @@ const authStore = createModel()({
       });
       dispatch.authStore.setIsUserAuthenticated(true);
     },
+    doSignOut() {
+      dispatch.authStore.setUserInfo(null);
+      dispatch.authStore.setIsUserAuthenticated(false);
+    },
   }),
 });
 

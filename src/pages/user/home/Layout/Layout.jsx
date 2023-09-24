@@ -1,5 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons';
-import { Card as CardAntd, Col, Row, Spin, Typography } from 'antd';
+import { Col, Row, Spin, Tabs } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useEffect, useState } from 'react';
@@ -12,6 +12,37 @@ function Layout() {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [newQuestions, setNewQuestions] = useState([]);
+
+  const items = [
+    {
+      key: '1',
+      label: 'Unanswered',
+      children: (
+        <Row gutter={[16, 24]} className="mx-auto">
+          {newQuestions.length !== 0 &&
+            newQuestions.map((question) => (
+              <Col key={question.id} span={6}>
+                <Card question={question} />
+              </Col>
+            ))}
+        </Row>
+      ),
+    },
+    {
+      key: '2',
+      label: 'Answered',
+      children: (
+        <Row gutter={[16, 24]} className="mx-auto">
+          {questions.length !== 0 &&
+            questions.map((question) => (
+              <Col key={question.id} span={6}>
+                <Card question={question} />
+              </Col>
+            ))}
+        </Row>
+      ),
+    },
+  ];
 
   useEffect(() => {
     (async () => {
@@ -45,44 +76,7 @@ function Layout() {
       </div>
     );
 
-  return (
-    <>
-      {newQuestions.length !== 0 && (
-        <CardAntd
-          title={
-            <Typography className="text-center text-3xl">Unanswered</Typography>
-          }
-          bordered={false}
-        >
-          <Row gutter={[16, 24]} className="mx-auto">
-            {newQuestions.map((question) => (
-              <Col key={question.id} span={6}>
-                <Card question={question} />
-              </Col>
-            ))}
-          </Row>
-        </CardAntd>
-      )}
-
-      {questions.length !== 0 && (
-        <CardAntd
-          className="mt-10"
-          title={
-            <Typography className="text-center text-3xl">Answered</Typography>
-          }
-          bordered={false}
-        >
-          <Row gutter={[16, 24]} className="mx-auto">
-            {questions.map((question) => (
-              <Col key={question.id} span={6}>
-                <Card question={question} />
-              </Col>
-            ))}
-          </Row>
-        </CardAntd>
-      )}
-    </>
-  );
+  return <Tabs defaultActiveKey="1" items={items} />;
 }
 
 export default Layout;

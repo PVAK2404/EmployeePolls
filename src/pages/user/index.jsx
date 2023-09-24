@@ -29,7 +29,7 @@ const routes = [
     ],
   },
   {
-    path: '404',
+    path: '*',
     element: <ErrorPage />,
   },
 ];

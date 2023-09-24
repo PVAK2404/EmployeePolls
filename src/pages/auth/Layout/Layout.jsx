@@ -8,7 +8,7 @@ import {
 } from 'antd';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const { Content } = AntLayout;
 const { Title } = Typography;
@@ -19,12 +19,13 @@ function Layout() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigator = useNavigate();
+  const location = useLocation();
 
   const handleFinish = async (payload) => {
     try {
       setLoading(true);
       await dispatch.authStore.doSignUp(payload);
-      navigator(0);
+      navigator(location.pathname);
     } catch (err) {
       setError(err.message);
     } finally {
